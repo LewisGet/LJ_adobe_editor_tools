@@ -24,7 +24,7 @@ function clone_clip(name, start_at)
 
     var insert_track = tracks[insert_track_index];
 
-    insert_track.insertClip(clone_item, insert_time);
+    insert_track.overwriteClip(clone_item, insert_time);
 }
 
 function clone_lewis()
