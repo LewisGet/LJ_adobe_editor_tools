@@ -69,3 +69,8 @@ track_2.insertClip(item2, 7);
 app.project.importFiles(["D:\\code\\LJ_adobe_editor_tools\\test_video2.mp4"], 1, app.project.rootItem, 0);
 
 var logs = item2.getXMPMetadata();
+
+/**
+    now active player time bar
+   */
+var active_time_point = active_sequence.getPlayerPosition();
