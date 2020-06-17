@@ -1,4 +1,6 @@
-﻿var console = {
+﻿#target PremierePro
+
+var console = {
         log: function (value) {
                 $.writeln(value);
             }
@@ -65,3 +67,5 @@ track_2.insertClip(item2, 7);
     4. import as numbered stills
  */
 app.project.importFiles(["D:\\code\\LJ_adobe_editor_tools\\test_video2.mp4"], 1, app.project.rootItem, 0);
+
+var logs = item2.getXMPMetadata();
