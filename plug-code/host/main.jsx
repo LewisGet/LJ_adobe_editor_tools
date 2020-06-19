@@ -17,14 +17,15 @@ function clone_clip(name, start_at)
     var org_track_index = insert_track_index - 3;
 
     var clip = get_clip(org_track_index, 0);
-    var insert_time = active_sequence.getPlayerPosition().seconds;
+    var insert_time_object = active_sequence.getPlayerPosition();
+    var insert_time = insert_time_object.seconds;
 
     var clip_name = name + "_" + (parseInt(insert_time)).toString();
     var clone_item = clip.projectItem.createSubClip(clip_name, 0, 5, 1, 1, 1, 1);
 
     var insert_track = tracks[insert_track_index];
 
-    insert_track.overwriteClip(clone_item, insert_time);
+    insert_track.overwriteClip(clone_item, insert_time_object);
 }
 
 function clone_lewis()
