@@ -25,42 +25,21 @@ function clone_clip(name, start_at)
 
     var insert_track = tracks[insert_track_index];
 
-    var org_track_clips = pre_clone_clip(insert_track);
-
     insert_track.overwriteClip(clone_item, insert_time_object);
 
-    var now_track_clips = post_clone_clip(insert_track);
-
-    var new_clips = now_track_clips.filter(function(obj) { return org_track_clips.indexOf(obj) == -1; });
-
-    for (var i = 0; i < new_clips.length; i++)
+    for (var i = 0; i < insert_track.clips.numItems; i++)
     {
-        new_clips[i].setSelected(true);
+        var this_clip = insert_track.clips[i];
+
+        if (this_clip.projectItem.nodeId == clone_item.nodeId)
+        {
+            this_clip.setSelected(true);
+        }
+        else
+        {
+            this_clip.setSelected(false);
+        }
     }
-}
-
-function pre_clone_clip(execute_track)
-{
-    var pre_execute = [];
-
-    for (var i = 0; i < execute_track.clips.numItems; i++)
-    {
-        pre_execute.push(execute_track.clips[i]);
-    }
-
-    return pre_execute;
-}
-
-function post_clone_clip(execute_track)
-{
-    var post_execute = [];
-
-    for (var i = 0; i < execute_track.clips.numItems; i++)
-    {
-        post_execute.push(execute_track.clips[i]);
-    }
-
-    return post_execute;
 }
 
 function clone_lewis()
