@@ -23,4 +23,22 @@ def load_vocab():
 
 name2id, id2name = load_vocab()
 
-model_default = './model.ckpt'
+classification_model_default = './classification.ckpt'
+cycleGAN_model_default = './cycleGAN.ckpt'
+
+input_device_index = 1
+
+class cycleGAN:
+    def __init__(self):
+        self.num_epochs = 3000
+        self.mini_batch_size_org, mini_batch_size = [20] * 2 # mini_batch_size = 1 is better
+        self.generator_learning_rate = 0.0002
+        self.generator_learning_rate_decay = generator_learning_rate / 200000
+        self.discriminator_learning_rate = 0.0001
+        self.discriminator_learning_rate_decay = discriminator_learning_rate / 200000
+        self.sampling_rate = 16000
+        self.num_mcep = 24
+        self.frame_period = 5.0
+        self.n_frames = 32 #org_value 128
+        self.lambda_cycle = 10
+        self.lambda_identity = 5
