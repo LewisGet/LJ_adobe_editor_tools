@@ -22,3 +22,5 @@ def load_vocab():
     return name2id, id2name
 
 name2id, id2name = load_vocab()
+
+model_default = './model.ckpt'
