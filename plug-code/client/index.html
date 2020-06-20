@@ -19,9 +19,16 @@
     <p>
         複製位置 <input type="text" id="clone-else-1" /> <button id="clone-else-1">else</button>
     </p>
+
+    <p>
+        Audio truck sort <input type="text" id="audio-truck-sort" />
+    </p>
+
     <p id="api_server_test">
     </p>
     <button onclick="window.load_json()">load api</button>
+
+    <button onclick="window.test_adobe_host()" >test get host return value</button>
 
     <script type="text/javascript" src="CSInterface.js"></script>
     <script type="text/javascript" src="index.js"></script>
@@ -37,6 +44,12 @@
                     window.api_server_test.innerText = http.responseText;
                 } catch (e) { }
             };
+        };
+
+        window.test_adobe_host = function () {
+            cs_interface.evalScript("test_adobe_host()", function (result) {
+                window.api_server_test.innerText = result;
+            });
         };
     </script>
 </body>

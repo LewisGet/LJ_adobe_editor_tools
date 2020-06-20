@@ -56,3 +56,8 @@ function clone_gold()
 {
     clone_clip("gold", 2);
 }
+
+function test_adobe_host()
+{
+    return "hello";
+}
