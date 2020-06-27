@@ -27,6 +27,8 @@ classification_model_default = './classification.ckpt'
 cycleGAN_model_default = './cycleGAN.ckpt'
 
 input_device_index = 1
+org_audio_save_path = './resource/org'
+vc_audio_save_path = './resource/vc'
 
 class cycleGAN:
     def __init__(self):
