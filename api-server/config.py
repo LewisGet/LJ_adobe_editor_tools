@@ -6,6 +6,8 @@ http_port = 8000
 
 name_lists = ['lewis', 'kevin', 'gold', 'else']
 
+input_device_index = 1
+
 sampling_rate = 16000
 num_mcep = 24
 frame_period = 5.0
@@ -35,9 +37,9 @@ class cycleGAN:
         self.num_epochs = 3000
         self.mini_batch_size_org, mini_batch_size = [20] * 2 # mini_batch_size = 1 is better
         self.generator_learning_rate = 0.0002
-        self.generator_learning_rate_decay = generator_learning_rate / 200000
+        self.generator_learning_rate_decay = self.generator_learning_rate / 200000
         self.discriminator_learning_rate = 0.0001
-        self.discriminator_learning_rate_decay = discriminator_learning_rate / 200000
+        self.discriminator_learning_rate_decay = self.discriminator_learning_rate / 200000
         self.sampling_rate = 16000
         self.num_mcep = 24
         self.frame_period = 5.0

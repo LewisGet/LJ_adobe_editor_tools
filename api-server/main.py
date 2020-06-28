@@ -1,7 +1,11 @@
 from werkzeug.wrappers import Request, Response
 import json, os, sys
+import input_audio
+import threading
 import config
 
+
+server_audio_recorder = input_audio.basic_recorder(input_device_index=config.input_device_index)
 
 @Request.application
 def application(request):
@@ -10,6 +14,13 @@ def application(request):
     if None is not request.args.get("audio_file_path"):
         # todo: all
         pass
+
+    if None is not request.args.get("start_record"):
+        background = threading.Thread(name='background', target=server_audio_recorder.start)
+        background.start()
+
+    if None is not request.args.get("stop_record"):
+        server_audio_recorder.record_stop = True
 
     from ast import literal_eval
 
