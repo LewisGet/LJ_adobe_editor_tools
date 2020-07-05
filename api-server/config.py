@@ -25,12 +25,13 @@ def load_vocab():
 
 name2id, id2name = load_vocab()
 
-classification_model_default = './classification.ckpt'
-cycleGAN_model_default = './cycleGAN.ckpt'
+classification_model_default = './mod/classification.ckpt'
+cycleGAN_model_default = './mod/vec'
 
 input_device_index = 1
 org_audio_save_path = './resource/org'
 vc_audio_save_path = './resource/vc'
+vc_conversion_direction = 'A2B'
 
 class cycleGAN:
     def __init__(self):

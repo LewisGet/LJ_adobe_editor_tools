@@ -3,7 +3,7 @@ import json, os, sys
 import input_audio
 import threading
 import config
-
+import time
 
 server_audio_recorder = input_audio.basic_recorder(input_device_index=config.input_device_index)
 
@@ -20,7 +20,15 @@ def application(request):
         background.start()
 
     if None is not request.args.get("stop_record"):
-        server_audio_recorder.record_stop = True
+        server_audio_recorder.end()
+
+        filename = str(time.time()) + ".wav"
+        org_file_path = os.path.sep.join([config.org_audio_save_path, filename])
+
+        server_audio_recorder.save(org_file_path)
+        x = input_audio.file_to_input(org_file_path)
+        input_audio.conversion_with_config(x, filename)
+
 
     from ast import literal_eval
 
