@@ -31,7 +31,7 @@ cycleGAN_model_default = './mod/vec'
 input_device_index = 1
 org_audio_save_path = './resource/org'
 vc_audio_save_path = './resource/vc'
-vc_conversion_direction = 'A2B'
+vc_conversion_direction = 'B2A'
 
 class cycleGAN:
     def __init__(self):
