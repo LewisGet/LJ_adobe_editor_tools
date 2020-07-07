@@ -1,5 +1,6 @@
 from werkzeug.wrappers import Request, Response
 import json, os, sys
+import cycle_gan_2_input as vc2
 import input_audio
 import threading
 import config
@@ -26,8 +27,8 @@ def application(request):
         org_file_path = os.path.sep.join([config.org_audio_save_path, filename])
 
         server_audio_recorder.save(org_file_path)
-        x = input_audio.file_to_input(org_file_path)
-        input_audio.conversion_with_config(x, filename)
+        x = vc2.file_to_input(org_file_path)
+        vc2.conversion_with_config(x, filename)
 
 
     from ast import literal_eval

@@ -1,3 +1,5 @@
+import os
+
 # 服務 ip
 host_ip = "127.0.0.1"
 
@@ -25,13 +27,19 @@ def load_vocab():
 
 name2id, id2name = load_vocab()
 
-classification_model_default = './mod/classification.ckpt'
-cycleGAN_model_default = './mod/vec'
+def p(v):
+    return os.path.sep.join(v.split('/'))
+
+classification_model_default = p('./mod/classification.ckpt')
+cycleGAN_model_default = p('./mod/vec')
+cycleGAN_2_model_default = p('./cycle_gan_2_mod/cyclegan_vc2_two_step_97500.ckpt')
+cycleGAN_2_audio_cache = p('./cycle_gan_2_cache')
 
 input_device_index = 1
-org_audio_save_path = './resource/org'
-vc_audio_save_path = './resource/vc'
-vc_conversion_direction = 'B2A'
+org_audio_save_path = p('./resource/org')
+vc_audio_save_path = p('./resource/vc')
+vc_2_audio_save_path = p('./resource/vc2')
+vc_conversion_direction = p('B2A')
 
 class cycleGAN:
     def __init__(self):
@@ -47,3 +55,13 @@ class cycleGAN:
         self.n_frames = 32 #org_value 128
         self.lambda_cycle = 10
         self.lambda_identity = 5
+
+
+class cycleGAN2:
+    def __init__(self):
+        self.sampling_rate = 16000
+        self.num_mcep = 36
+        self.frame_period = 5.0
+        self.n_frames = 128
+        self.src_speaker = 'b'
+        self.trg_speaker = 'a'
