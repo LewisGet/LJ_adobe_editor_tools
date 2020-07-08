@@ -10,7 +10,7 @@ server_audio_recorder = input_audio.basic_recorder(input_device_index=config.inp
 
 @Request.application
 def application(request):
-    data = '{"hello": "this is not working now."}'
+    data = {"hello": "this is not working now."}
 
     if None is not request.args.get("audio_file_path"):
         # todo: all
@@ -19,6 +19,8 @@ def application(request):
     if None is not request.args.get("start_record"):
         background = threading.Thread(name='background', target=server_audio_recorder.start)
         background.start()
+
+        data = {"message": "start record"}
 
     if None is not request.args.get("stop_record"):
         server_audio_recorder.end()
@@ -30,10 +32,11 @@ def application(request):
         x = vc2.file_to_input(org_file_path)
         vc2.conversion_with_config(x, filename)
 
-
-    from ast import literal_eval
-
-    data = literal_eval(data)
+        data = {
+            "message": "stop record",
+            "org_path": os.path.sep.join([os.getcwd(), org_file_path]),
+            "vc2_path": os.path.sep.join([os.getcwd(), config.vc_2_audio_save_path, filename])
+        }
 
     return Response(json.dumps(data), mimetype='text/json')
 
