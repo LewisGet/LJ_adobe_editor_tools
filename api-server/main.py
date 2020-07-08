@@ -13,7 +13,8 @@ def application(request):
     data = {"hello": "this is not working now."}
 
     if None is not request.args.get("audio_file_path"):
-        # todo: all
+        # todo: adobe 點音效 clips 時，取得 clips 的 start point 跟 end point 與 path
+        # todo: 再透過 python 取 path 拿到音效檔，依照 start end point 截斷 array 在執行 vc, vc2
         pass
 
     if None is not request.args.get("start_record"):
