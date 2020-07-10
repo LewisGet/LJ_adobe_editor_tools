@@ -21,7 +21,9 @@
     </p>
 
     <p>
-        Audio truck sort <input type="text" id="audio-truck-sort" />
+        Input audio at last <input type="text" id="audio-truck-input" value="1" /> truck,
+        <br />
+        and vc gan audio to last <input type="text" id="audio-truck-vc-input" value="0" /> truck.
     </p>
 
     <p id="api_server_test">
@@ -40,9 +42,11 @@
             http.send();
 
             http.onreadystatechange = function () {
-                try {
-                    execute_function(http.responseText);
-                } catch (e) { }
+                if (http.readyState == 4) {
+                    try {
+                        execute_function(http.responseText);
+                    } catch (e) { }
+                }
             };
         };
 
@@ -57,9 +61,17 @@
                 var v = JSON.parse(r);
 
                 window.api_server_test.innerText = v.message;
+                var input_sort = document.getElementById('audio-truck-input').value;
+                var input_vc_sort = document.getElementById('audio-truck-vc-input').value;
 
-                cs_interface.evalScript("input_to_now('" + v.org_path.replace("\\.\\", "\\").split("\\").join("\\\\") + "', 1)", function (result) { });
-                cs_interface.evalScript("input_to_now('" + v.vc2_path.replace("\\.\\", "\\").split("\\").join("\\\\") + "', 0)", function (result) { });
+                var input_function = function (a, b) {
+                    var a = a.replace("\\.\\", "\\").split("\\").join("\\\\");
+
+                    return "input_to_now('" + a + "', " + b + ")";
+                };
+
+                cs_interface.evalScript(input_function(v.org_path, input_sort), function (result) { });
+                cs_interface.evalScript(input_function(v.vc2_path, input_vc_sort), function (result) { });
             });
         };
     </script>
