@@ -3,6 +3,10 @@ var tracks = app.project.activeSequence.videoTracks;
 var total_tracks = tracks.numTracks;
 var total_tracks_for_array = tracks.numTracks - 1;
 
+var audio_tracks = app.project.activeSequence.audioTracks;
+var audio_total_tracks = audio_tracks.numTracks;
+var audio_total_tracks_for_array = audio_tracks.numTracks - 1;
+
 function get_clip(track_sort, clip_sort)
 {
     return (tracks[track_sort]).clips[clip_sort];
@@ -57,7 +61,36 @@ function clone_gold()
     clone_clip("gold", 2);
 }
 
-function test_adobe_host()
+/**
+ * path string
+ */
+function load_file(path)
 {
-    return "hello";
+    app.project.importFiles([path], 1, app.project.rootItem, 0);
+
+    return app.project.rootItem.findItemsMatchingMediaPath(path)[0];
+}
+
+function input_to_now(path, start_at)
+{
+    var input_item = load_file(path);
+
+    var insert_time_object = active_sequence.getPlayerPosition();
+    var insert_track = audio_tracks[audio_total_tracks_for_array - start_at];
+
+    insert_track.overwriteClip(input_item, insert_time_object);
+
+    for (var i = 0; i < insert_track.clips.numItems; i++)
+    {
+        var this_clip = insert_track.clips[i];
+
+        if (this_clip.projectItem.nodeId == input_item.nodeId)
+        {
+            this_clip.setSelected(true);
+        }
+        else
+        {
+            this_clip.setSelected(false);
+        }
+    }
 }

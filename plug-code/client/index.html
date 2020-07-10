@@ -26,29 +26,40 @@
 
     <p id="api_server_test">
     </p>
-    <button onclick="window.load_json()">load api</button>
-
-    <button onclick="window.test_adobe_host()" >test get host return value</button>
+    
+    <button onclick="window.start_record()">start record</button>
+    <button onclick="window.stop_record()">stop record</button>
 
     <script type="text/javascript" src="CSInterface.js"></script>
     <script type="text/javascript" src="index.js"></script>
     <script type="text/javascript">
-        window.load_json = function () {
+        window.get_request = function (url, execute_function) {
             http = new window.XMLHttpRequest();
             http.overrideMimeType("text/json");
-            http.open('GET', 'http://127.0.0.1:8000/', true);
+            http.open('GET', url, true);
             http.send();
 
             http.onreadystatechange = function () {
                 try {
-                    window.api_server_test.innerText = http.responseText;
+                    execute_function(http.responseText);
                 } catch (e) { }
             };
         };
 
-        window.test_adobe_host = function () {
-            cs_interface.evalScript("test_adobe_host()", function (result) {
-                window.api_server_test.innerText = result;
+        window.start_record = function () {
+            window.get_request("http://127.0.0.1:8000/?start_record", function (r) {
+                window.api_server_test.innerText = JSON.parse(r).message;
+            });
+        };
+
+        window.stop_record = function () {
+            window.get_request("http://127.0.0.1:8000/?stop_record", function (r) {
+                var v = JSON.parse(r);
+
+                window.api_server_test.innerText = v.message;
+
+                cs_interface.evalScript("input_to_now('" + v.org_path.replace("\\.\\", "\\").split("\\").join("\\\\") + "', 1)", function (result) { });
+                cs_interface.evalScript("input_to_now('" + v.vc2_path.replace("\\.\\", "\\").split("\\").join("\\\\") + "', 0)", function (result) { });
             });
         };
     </script>
