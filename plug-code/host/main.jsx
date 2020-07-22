@@ -149,3 +149,8 @@ function get_selected_clips_info(type)
 
     return return_value;
 }
+
+function server_debug(code)
+{
+    return eval(code);
+}
