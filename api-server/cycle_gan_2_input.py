@@ -88,8 +88,9 @@ def convert_to_input(audio):
 def save_pre_execute(audio, path, rename = None):
     name = rename
     if rename is None:
-        name, _ = os.path.splitext(os.path.basename(path))
+        name = os.path.basename(path)
 
+    name, _ = os.path.splitext(os.path.basename(name))
     path = config.pre_vc_2_audio_save_path
 
     audio.export("%s.wav" % os.path.sep.join([path, name]), format="wav")
