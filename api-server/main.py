@@ -12,10 +12,19 @@ server_audio_recorder = input_audio.basic_recorder(input_device_index=config.inp
 def application(request):
     data = {"hello": "this is not working now."}
 
-    if None is not request.args.get("audio_file_path"):
-        # todo: adobe 點音效 clips 時，取得 clips 的 start point 跟 end point 與 path
-        # todo: 再透過 python 取 path 拿到音效檔，依照 start end point 截斷 array 在執行 vc, vc2
-        pass
+    if None is not request.args.get("audio_file_path") and \
+       None is not request.args.get("start") and \
+       None is not request.args.get("end"):
+        path = request.args.get("audio_file_path")
+        org_name, _ = os.path.splitext(os.path.basename(path))
+        filename = str(time.time()) + "-" + org_name + ".wav"
+
+        start = float(request.args.get("start"))
+        end = float(request.args.get("end"))
+
+        #todo: cute audio
+        x = vc2.file_to_input(path, backup=True, start=start, end=end)
+        vc2.conversion_with_config(x, filename)
 
     if None is not request.args.get("start_record"):
         background = threading.Thread(name='background', target=server_audio_recorder.start)

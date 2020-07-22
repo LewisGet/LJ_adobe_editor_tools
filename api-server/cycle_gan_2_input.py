@@ -53,8 +53,20 @@ def conversion_with_config(wav, file_name):
     librosa.output.write_wav(os.path.join(config.vc_2_audio_save_path, file_name), wav_transformed,
                              sampling_rate)
 
-def file_to_input(path, backup):
+def file_to_input(path, backup = False, start = None, end = None):
     audio = AudioSegment.from_file(path)
+
+    if start is not None and end is not None:
+        start = int(start * 1000)
+        end = int(end * 1000)
+
+        if start < 0:
+            start = 0
+
+        if end > len(audio):
+            end = len(audio)
+
+        audio = audio[start:end]
 
     audio = convert_to_input(audio)
 
@@ -72,6 +84,6 @@ def convert_to_input(audio):
 
 def save_pre_execute(audio, path):
     name, _ = os.path.splitext(os.path.basename(path))
-    path = os.path.sep.join([config.pre_vc_2_audio_save_path, name])
+    path = config.pre_vc_2_audio_save_path
 
     audio.export("%s.wav" % os.path.join(path, name), format="wav")
