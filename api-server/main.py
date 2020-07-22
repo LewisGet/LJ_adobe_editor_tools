@@ -23,8 +23,15 @@ def application(request):
         end = float(request.args.get("end"))
 
         #todo: cute audio
-        x = vc2.file_to_input(path, backup=True, start=start, end=end)
+        x = vc2.file_to_input(path, backup=True, start=start, end=end, backup_rename = filename)
         vc2.conversion_with_config(x, filename)
+
+        data = {
+            "message": "clip " + filename,
+            "org_path": path,
+            "pre_path": os.path.sep.join([os.getcwd(), config.pre_vc_2_audio_save_path, filename]),
+            "vc2_path": os.path.sep.join([os.getcwd(), config.vc_2_audio_save_path, filename])
+        }
 
     if None is not request.args.get("start_record"):
         background = threading.Thread(name='background', target=server_audio_recorder.start)
