@@ -30,7 +30,7 @@ def application(request):
         org_file_path = os.path.sep.join([config.org_audio_save_path, filename])
 
         server_audio_recorder.save(org_file_path)
-        x = vc2.file_to_input(org_file_path)
+        x = vc2.file_to_input(org_file_path, True)
         vc2.conversion_with_config(x, filename)
 
         data = {
