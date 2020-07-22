@@ -158,6 +158,11 @@ function pass_to_client(v)
     return JSON.stringify(v);
 }
 
+function _client_get_selected_clips_info(type)
+{
+    return pass_to_client(get_selected_clips_info(type));
+}
+
 function server_debug(code)
 {
     return eval(code);

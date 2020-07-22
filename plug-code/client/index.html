@@ -31,6 +31,7 @@
     
     <button onclick="window.start_record()">start record</button>
     <button onclick="window.stop_record()">stop record</button>
+    <button onclick="window.clip_vc()">clip to vc</button>
 
     <h2>Add debuger script</h2>
     <p>
@@ -41,6 +42,7 @@
     </p>
 
     <script type="text/javascript" src="CSInterface.js"></script>
+    <script type="text/javascript" src="URLSearchParams.min.js"></script>
     <script type="text/javascript" src="index.js"></script>
     <script type="text/javascript">
         window.get_request = function (url, execute_function) {
@@ -72,15 +74,37 @@
                 var input_sort = document.getElementById('audio-truck-input').value;
                 var input_vc_sort = document.getElementById('audio-truck-vc-input').value;
 
-                var input_function = function (a, b) {
-                    var a = a.replace("\\.\\", "\\").split("\\").join("\\\\");
-
-                    return "input_to_now('" + a + "', " + b + ")";
-                };
-
-                cs_interface.evalScript(input_function(v.org_path, input_sort), function (result) { });
-                cs_interface.evalScript(input_function(v.vc2_path, input_vc_sort), function (result) { });
+                window.input_file(v.org_path, input_sort);
+                window.input_file(v.vc2_path, input_vc_sort);
             });
+        };
+
+        window.clip_vc = function () {
+            cs_interface.evalScript("_client_get_selected_clips_info('audio')", function (r) {
+                var clips = JSON.parse(r);
+                var clip = clips[0];
+                var url = new URLSearchParams({start: clip[0], end: clip[1], audio_file_path: clip[2]});
+
+                window.api_server_test.innerText = "debug url : " + url.toString();
+
+                window.get_request("http://127.0.0.1:8000/?" + url.toString(), function (rr) {
+                    var v = JSON.parse(rr);
+
+                    window.api_server_test.innerText = v.message;
+                    var input_sort = document.getElementById('audio-truck-input').value;
+                    var input_vc_sort = document.getElementById('audio-truck-vc-input').value;
+
+                    window.input_file(v.pre_path, input_sort);
+                    window.input_file(v.vc2_path, input_vc_sort);
+                });
+            });
+        };
+
+        window.input_file = function (path, sort, callback) {
+            var path = path.replace("\\.\\", "\\").split("\\").join("\\\\");
+            var script = "input_to_now('" + path + "', " + sort.toString() + ")";
+
+            cs_interface.evalScript(script, function (r) { callback(r); });
         };
     </script>
 </body>
