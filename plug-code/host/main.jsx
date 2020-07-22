@@ -94,3 +94,34 @@ function input_to_now(path, start_at)
         }
     }
 }
+
+function get_selected_clips(type)
+{
+    var loop_track = function (tracks, indexs) {
+        var return_value = [];
+
+        for (var i = 0; i < indexs; i++)
+        {
+            var this_track = tracks[i];
+
+            for (var ii = 0; ii < this_track.clips.numItems; ii++)
+            {
+                var this_clip = this_track.clips[ii];
+
+                if (this_clip.isSelected())
+                {
+                    return_value.push(this_clip);
+                }
+            }
+        }
+
+        return return_value;
+    };
+
+    if (type == "audio")
+    {
+        return loop_track(audio_tracks, audio_total_tracks);
+    }
+
+    return loop_track(tracks, total_tracks);
+}
