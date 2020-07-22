@@ -32,6 +32,14 @@
     <button onclick="window.start_record()">start record</button>
     <button onclick="window.stop_record()">stop record</button>
 
+    <h2>Add debuger script</h2>
+    <p>
+        <textarea id="add-debuger-script"></textarea>
+    </p>
+    <p>
+        <button onclick="eval(window['add-debuger-script'].value);">add debuger script</button>
+    </p>
+
     <script type="text/javascript" src="CSInterface.js"></script>
     <script type="text/javascript" src="index.js"></script>
     <script type="text/javascript">
