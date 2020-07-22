@@ -125,3 +125,12 @@ function get_selected_clips(type)
 
     return loop_track(tracks, total_tracks);
 }
+
+function get_clip_info(clip)
+{
+    var start = clip.start.seconds;
+    var end = clip.end.seconds;
+    var file_path = clip.projectItem.getMediaPath();
+
+    return [start, end, file_path];
+}
