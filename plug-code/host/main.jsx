@@ -134,3 +134,18 @@ function get_clip_info(clip)
 
     return [start, end, file_path];
 }
+
+function get_selected_clips_info(type)
+{
+    var return_value = [];
+    var selected_clips = get_selected_clips(type);
+
+    for (var i = 0; i < selected_clips.length; i++)
+    {
+        var this_clip = selected_clips[i];
+
+        return_value.push(get_clip_info(this_clip));
+    }
+
+    return return_value;
+}
