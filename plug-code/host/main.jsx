@@ -128,8 +128,8 @@ function get_selected_clips(type)
 
 function get_clip_info(clip)
 {
-    var start = clip.start.seconds;
-    var end = clip.end.seconds;
+    var start = clip.inPoint.seconds;
+    var end = clip.outPoint.seconds;
     var file_path = clip.projectItem.getMediaPath();
 
     return [start, end, file_path];
