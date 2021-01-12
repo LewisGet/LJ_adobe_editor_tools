@@ -32,7 +32,7 @@ def p(v):
 
 classification_model_default = p('./mod/classification.ckpt')
 cycleGAN_model_default = p('./mod/vec')
-cycleGAN_2_model_default = p('./cycle_gan_2_mod/cyclegan_vc2_two_step_160000.ckpt')
+cycleGAN_2_model_default = p('./cycle_gan_2_mod/cyclegan_vc2_two_step_75000.ckpt')
 cycleGAN_2_audio_cache = p('./cycle_gan_2_cache')
 
 input_device_index = 1
@@ -41,6 +41,16 @@ vc_audio_save_path = p('./resource/vc')
 vc_2_audio_save_path = p('./resource/vc2')
 pre_vc_2_audio_save_path = p('./resource/pre_vc2_org')
 vc_conversion_direction = p('B2A')
+
+# 原始紀錄
+lewis_org_data_path = p('./resource/org/lewis')
+kevin_org_data_path = p('./resource/org/kevin')
+gold_org_data_path = p('./resource/org/gold')
+
+# 壓縮訓練用
+lewis_zip_16k_data_path = p('./resource/zip_16k/lewis')
+kevin_zip_16k_data_path = p('./resource/zip_16k/kevin')
+gold_zip_16k_data_path = p('./resource/zip_16k/gold')
 
 class cycleGAN:
     def __init__(self):

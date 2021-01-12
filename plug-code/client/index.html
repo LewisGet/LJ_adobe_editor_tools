@@ -5,16 +5,18 @@
     <title>LJ subtitle</title>
 </head>
 <body>
-    <h1>使用說明</h1>
-
-    <p>
-        <!-- todo: 補上說明內容 -->
-        something text in here.
-    </p>
+    <h1>複製字幕</h1>
 
     <button id="clone-lewis">lewis</button>
     <button id="clone-kevin">kevin</button>
     <button id="clone-gold">gold</button>
+
+    <h1>紀錄訓練資料</h1>
+
+    <button id="save-lewis" onclick="window.save_ml_audio('lewis')">lewis</button>
+    <button id="save-kevin" onclick="window.save_ml_audio('kevin')">kevin</button>
+    <button id="save-gold" onclick="window.save_ml_audio('gold')">gold</button>
+    <button onclick="window.api_server_test.innerText = 'test'">test</button>
 
     <p>
         複製位置 <input type="text" id="clone-else-1" /> <button id="clone-else-1">else</button>
@@ -105,6 +107,22 @@
             var script = "input_to_now('" + path + "', " + sort.toString() + ")";
 
             cs_interface.evalScript(script, function (r) { callback(r); });
+        };
+
+        window.save_ml_audio = function (save_data_type) {
+            cs_interface.evalScript("_client_get_selected_clips_info('audio')", function (r) {
+                var dataset = JSON.parse(r);
+                var data = dataset[0];
+                var url = new URLSearchParams({start: data[0], end: data[1], path: data[2], type: save_data_type});
+
+                window.api_server_test.innerText = "debug url : " + url.toString();
+
+                window.get_request("http://127.0.0.1:8000/?" + url.toString(), function (rr) {
+                    var v = JSON.parse(rr);
+
+                    window.api_server_test.innerText = v.message;
+                });
+            });
         };
     </script>
 </body>
