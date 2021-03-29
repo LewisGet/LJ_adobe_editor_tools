@@ -4,6 +4,11 @@ auto injection Tensorflow output in adobe premiere pro.
 
 ![image](my_memory_doc/demo.gif)
 
+## How this work
+
+![image](my_memory_doc/flow_doc.jpg)
+
+
 ## compiler
 
 ### create signed key
